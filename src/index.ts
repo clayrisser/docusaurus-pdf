@@ -25,12 +25,24 @@ const getStylesheetPathFromHTML = (html: string, origin: string) => {
   return getURL(origin, filePath);
 };
 
-const getScriptPathFromHTML = (html: string, origin: string) => {
-  const regExp = /(?:|<script.*){1}src="(.*styles.*?\.js){1}"/g;
+const getScriptPathFromHTML = (
+  html: string,
+  origin: string,
+  overrideRegExp?: RegExp
+): string => {
+  const regExp =
+    overrideRegExp || /(?:|<script.*){1}src="(.*styles.*?\.js){1}"/g;
   let filePath = "";
   try {
     filePath = getFirstCapturingGroup(regExp, html);
   } catch {
+    if (!overrideRegExp) {
+      return getScriptPathFromHTML(
+        html,
+        origin,
+        /(?:|<script.*){1}src="(.*?\.js){1}"/g
+      );
+    }
     throw new Error(
       "The src attribute of the 'styles*.js' file could not be found!"
     );
