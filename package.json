@@ -1,6 +1,6 @@
 {
   "name": "@codejamninja/docusaurus-pdf",
-  "version": "1.2.0",
+  "version": "1.2.3",
   "description": "Generate pdf from docusaurus document",
   "main": "lib/index.js",
   "scripts": {

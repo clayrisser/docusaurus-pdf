@@ -15,9 +15,12 @@ program
   .name("docusaurus-pdf")
   .usage("<initialDocsUrl> [filename]")
   .description("Generate PDF from initial docs url")
+  .option("--no-sandbox", "Start puppeteer with --no-sandbox flag")
   .arguments("<initialDocsUrl> [filename]")
   .action((initialDocsUrl, filename) => {
-    generatePdf(initialDocsUrl, filename)
+    const options = program.opts();
+    const puppeteerArgs = options.sandbox ? [] : ["--no-sandbox"];
+    generatePdf(initialDocsUrl, filename, puppeteerArgs)
       .then(() => {
         console.log(chalk.green("Finish generating PDF!"));
         process.exit(0);

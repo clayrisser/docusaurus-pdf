@@ -141,7 +141,7 @@ export async function generatePdf(
       nextPageUrl = "";
     }
 
-    let html = await page.$eval("article", (element) => {
+    let html = await page.$eval("div", (element) => {
       return element.outerHTML;
     });
 
